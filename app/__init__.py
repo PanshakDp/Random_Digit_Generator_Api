@@ -1,7 +1,11 @@
+import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
+from pymongo import MongoClient
 
 db = SQLAlchemy()
+client = client = MongoClient(os.environ['MONGODB_URL']+'?retryWrites=false')
+db2 = client.panshak
 
 
 def create_app():
