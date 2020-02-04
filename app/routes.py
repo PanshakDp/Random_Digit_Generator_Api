@@ -59,8 +59,6 @@ def generate_pin2():
 @app.route('/api/v2/pin/validate/<pin>/<serial>')
 def validate_pin2(pin, serial):
     pin = int(pin)
-    serial = int(serial)
-
     pins = db2.pins
     serial = pins.find_one({'digit': pin, 'serial': serial})
     if serial:
