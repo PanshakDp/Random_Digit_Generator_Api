@@ -2,6 +2,7 @@ from flask import request, render_template, make_response
 from datetime import datetime as dt
 from flask import current_app as app
 from .models import db, Pin
+from app import db2
 from random import randint
 
 
@@ -39,4 +40,25 @@ def validate_pin(pin, serial):
     db_pin = Pin.query.filter_by(digit=pin, id=serial).first()
     if db_pin:
         return make_response({'pin': db_pin.digit, 'serial': f'0{db_pin.id}', 'message': 'Pin valid'})
+    return make_response({'message': 'Pin doest not exists ...!'}), 404
+
+
+@app.route('/api/v2/pin/generate/', methods=['GET'])
+def generate_pin2():
+    pins = db2.pins
+    digit = random_with_N_digits(15)
+    serial = pins.find({}).count() + 1
+    pins.insert_one({'digit': digit, 'serial': serial})
+    return make_response({'message': 'Pin generated sucesfully!', 'pin': digit, 'serial': f'0{serial}'})
+
+
+@app.route('/api/v2/pin/validate/<pin>/<serial>')
+def validate_pin2(pin, serial):
+    pin = int(pin)
+    serial = int(serial)
+
+    pins = db2.pins
+    serial = pins.find_one({'digit': pin, 'serial': serial})
+    if serial:
+        return make_response({'message': 'Pin valid'})
     return make_response({'message': 'Pin doest not exists ...!'}), 404
