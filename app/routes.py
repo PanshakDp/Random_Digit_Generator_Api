@@ -17,7 +17,7 @@ def random_with_N_digits(n):
 def index():
     """Root."""
     return make_response({
-        'message_v1': 'To generate pin use this endpoint : /api/v1/pin/generate/, to validate pin use this endpoint /api/v1/pin/vaidate/<pin>/<serial>'
+        'message_v1': 'To generate pin use this endpoint : /api/v1/pin/generate/, to validate pin use this endpoint /api/v1/pin/vaidate/<pin>/<serial>',
         'message_v2': 'To generate pin use this endpoint : /api/v2/pin/generate/, to validate pin use this endpoint /api/v2/pin/vaidate/<pin>/<serial>'
     })
     
