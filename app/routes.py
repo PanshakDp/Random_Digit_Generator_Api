@@ -16,7 +16,10 @@ def random_with_N_digits(n):
 @app.route('/', methods=['GET'])
 def index():
     """Root."""
-    return make_response({'message': 'To generate pin use this endpoint : /api/v1/pin/generate/, to validate pin use this endpoint /api/v1/pin/vaidate/<pin>/<serial>'})
+    return make_response({
+        'message_v1': 'To generate pin use this endpoint : /api/v1/pin/generate/, to validate pin use this endpoint /api/v1/pin/vaidate/<pin>/<serial>'
+        'message_v2': 'To generate pin use this endpoint : /api/v2/pin/generate/, to validate pin use this endpoint /api/v2/pin/vaidate/<pin>/<serial>'
+    })
     
 
 
@@ -39,7 +42,7 @@ def validate_pin(pin, serial):
     serial = int(serial)
     db_pin = Pin.query.filter_by(digit=pin, id=serial).first()
     if db_pin:
-        return make_response({'pin': db_pin.digit, 'serial': f'0{db_pin.id}', 'message': 'Pin valid'})
+        return make_response({'message': 'Pin valid'})
     return make_response({'message': 'Pin doest not exists ...!'}), 404
 
 
