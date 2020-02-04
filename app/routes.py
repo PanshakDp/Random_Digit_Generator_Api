@@ -50,7 +50,8 @@ def validate_pin(pin, serial):
 def generate_pin2():
     pins = db2.pins
     digit = random_with_N_digits(15)
-    serial = pins.find({}).count() + 1
+    serial = str(int(pins.find({}).count()) + 1)
+    serial = '0'*(12 - len(serial))+serial
     pins.insert_one({'digit': digit, 'serial': serial})
     return make_response({'message': 'Pin generated sucesfully!', 'pin': digit, 'serial': f'0{serial}'})
 
